@@ -10,11 +10,13 @@
     >
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/albumes"
         android:textAlignment="center"
-        android:textAppearance="@style/mainTitle"
+        android:textColor="#ffffff"
+        android:textSize="45dp"
+
 
         />
     <androidx.recyclerview.widget.RecyclerView
