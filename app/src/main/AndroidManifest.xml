@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".recycler_album_item"></activity>
+        <activity
+            android:name=".DetalleActivity"
+            android:exported="true" />
+        <activity android:name=".recycler_album_item" />
         <activity android:name=".About" />
         <activity android:name=".MainActivity">
             <intent-filter>

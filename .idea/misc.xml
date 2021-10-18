@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/Flickr_App_TDAM_FRC_UTN/app/src/main/res/layout/activity_detalle.xml" value="0.12760416666666666" />
         <entry key="..\:/Android/Flickr_App_TDAM_FRC_UTN/app/src/main/res/layout/activity_main.xml" value="0.12395833333333334" />
+        <entry key="..\:/Android/Flickr_App_TDAM_FRC_UTN/app/src/main/res/layout/activity_recycler_album_item.xml" value="0.13125" />
+        <entry key="..\:/Android/Flickr_App_TDAM_FRC_UTN/app/src/main/res/layout/activity_recycler_detalle_item.xml" value="0.13125" />
       </map>
     </option>
   </component>
