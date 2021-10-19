@@ -32,6 +32,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.titulo.setText(entidades.get(position).getTitulo());
         holder.foto.setImageResource(entidades.get(position).getFoto());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickListener.onClick(view,position);
+            }
+        });
     }
 
     @Override
@@ -39,7 +45,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         return entidades.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         //hace referencia a los componentes gráficos
         TextView titulo;
         ImageView foto;
@@ -53,9 +59,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
             this.onItemClickListener=onItemClickListener;
         }
 
-        @Override
-        public void onClick(View view) {
-            onItemClickListener.onClick(view,getAdapterPosition());
-        }
+
     }
 }

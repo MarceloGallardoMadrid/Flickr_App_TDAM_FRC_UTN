@@ -1,6 +1,7 @@
 package com.nahue.flickrapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,19 +23,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listadetalle=new ArrayList<>();
         cargarDetalle();
-        RecyclerView rec =(RecyclerView)findViewById(R.id.rec);
-        rec.setHasFixedSize(true);
-
-        rec.setLayoutManager(new LinearLayoutManager(this));
-
-        AlbumAdapter adapter = new AlbumAdapter(listadetalle, new OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                Toast.makeText(getApplicationContext(), "Hice un clic", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(),DetalleActivity.class));
-            }
-        });
-        rec.setAdapter(adapter);
+        RecyclerAlbumFragment frag = new RecyclerAlbumFragment();
+        FragmentTransaction transaction= getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container,frag);
+        transaction.commit();
         btnDetalle = (Button) findViewById(R.id.btnDetalle);
         btnDetalle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +34,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),DetalleActivity.class));
             }
         });
+    }
+    private void onCreateRecycler(){
+        listadetalle=new ArrayList<>();
+        cargarDetalle();
+        //RecyclerView rec =(RecyclerView)findViewById(R.id.rec);
+        RecyclerView rec =new RecyclerView(this);
+        rec.setHasFixedSize(true);
+
+        rec.setLayoutManager(new LinearLayoutManager(this));
+
+        RecyclerView.Adapter adapter = new AlbumAdapter(listadetalle, new OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                Toast.makeText(getApplicationContext(), "Hice un clic: "+position, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(),DetalleActivity.class));
+            }
+        });
+        rec.setAdapter(adapter);
     }
 
 
