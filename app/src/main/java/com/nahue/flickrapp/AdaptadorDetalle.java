@@ -1,22 +1,29 @@
 package com.nahue.flickrapp;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.ViewHolderDetalle> {
+public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.ViewHolderDetalle>  {
 
     ArrayList<EntidadDetalle> listaDetalle;
 
+
+
     public AdaptadorDetalle(ArrayList<EntidadDetalle> listaDetalle) {
         this.listaDetalle = listaDetalle;
+
     }
 
     //@NonNull
@@ -40,15 +47,23 @@ public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.View
         return listaDetalle.size();
     }
 
-    public class ViewHolderDetalle extends RecyclerView.ViewHolder {
+
+
+
+    public class ViewHolderDetalle extends RecyclerView.ViewHolder  {
         //hace referencia a los componentes gráficos
         TextView titulo;
         ImageView foto;
-
+        public View v;
         public ViewHolderDetalle(@NonNull View itemView) {
             super(itemView);
+            v=itemView;
             titulo = (TextView) itemView.findViewById(R.id.textViewTitulo);
             foto = (ImageView) itemView.findViewById(R.id.imageView);
+
+
         }
+
+
     }
 }

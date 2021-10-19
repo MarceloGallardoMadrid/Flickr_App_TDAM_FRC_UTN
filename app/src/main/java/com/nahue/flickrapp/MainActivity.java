@@ -1,30 +1,61 @@
 package com.nahue.flickrapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity {
 
     private Button btnDetalle;
-
+    ArrayList<EntidadDetalle> listadetalle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listadetalle=new ArrayList<>();
+        cargarDetalle();
+        RecyclerView rec =(RecyclerView)findViewById(R.id.rec);
+        rec.setHasFixedSize(true);
 
+        rec.setLayoutManager(new LinearLayoutManager(this));
+
+        AlbumAdapter adapter = new AlbumAdapter(listadetalle, new OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                Toast.makeText(getApplicationContext(), "Hice un clic", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(),DetalleActivity.class));
+            }
+        });
+        rec.setAdapter(adapter);
         btnDetalle = (Button) findViewById(R.id.btnDetalle);
-        btnDetalle.setOnClickListener((View.OnClickListener) this);
+        btnDetalle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),DetalleActivity.class));
+            }
+        });
     }
 
-    @Override
-    public void onClick(View view){
-        Intent intent = null;
-        intent = new Intent(getApplicationContext(), DetalleActivity.class);
-        startActivity(intent);
+
+    private void cargarDetalle() {
+        listadetalle.add(new EntidadDetalle("Nueva Foto",R.drawable.foto1));
+        listadetalle.add(new EntidadDetalle("Disfrutando el paisaje",R.drawable.foto2));
+        listadetalle.add(new EntidadDetalle("Disfrutando la vida",R.drawable.foto3));
+        listadetalle.add(new EntidadDetalle("Haciendo ejemplos",R.drawable.foto4));
+        listadetalle.add(new EntidadDetalle("Metiéndole a full para que salga",R.drawable.foto5));
+        listadetalle.add(new EntidadDetalle("Ver que pasa si es una descripción muy larga que no entra",R.drawable.foto6));
+        listadetalle.add(new EntidadDetalle("Bien",R.drawable.foto7));
+        listadetalle.add(new EntidadDetalle("Excelente",R.drawable.foto8));
+
+
     }
 
 }
