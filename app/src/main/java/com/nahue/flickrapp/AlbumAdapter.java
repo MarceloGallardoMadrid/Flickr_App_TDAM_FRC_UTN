@@ -36,6 +36,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
             @Override
             public void onClick(View view) {
                 onItemClickListener.onClick(view,position);
+
             }
         });
     }
