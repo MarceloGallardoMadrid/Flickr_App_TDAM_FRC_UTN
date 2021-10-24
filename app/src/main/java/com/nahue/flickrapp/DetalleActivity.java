@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -20,18 +22,24 @@ public class DetalleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalle);
 
         listadetalle = new ArrayList<>();
-
         recyclerViewDet = (RecyclerView) findViewById(R.id.recyclerViewDetalle);
         recyclerViewDet.setHasFixedSize(true);
-
         recyclerViewDet.setLayoutManager(new LinearLayoutManager(this));
         //recyclerViewD.setLayoutManager(new GridLayoutManager(this, 2));
 
         cargarDetalle();
+        //AdaptadorDetalle adapter = new AdaptadorDetalle(listadetalle);
 
-        AdaptadorDetalle adapter = new AdaptadorDetalle(listadetalle);
+        RecyclerView.Adapter adapter = new DetalleAdapter(listadetalle, new OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                Toast.makeText(getApplicationContext(), "Hice un clic: "+position, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(),FotoFinalActivity.class));
+            }
+        });
 
         recyclerViewDet.setAdapter(adapter);
+
 
     }
 

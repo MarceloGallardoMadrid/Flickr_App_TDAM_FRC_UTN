@@ -1,29 +1,24 @@
 package com.nahue.flickrapp;
 
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.ViewHolderDetalle>  {
+public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.ViewHolderDetalle> {
 
     ArrayList<EntidadDetalle> listaDetalle;
+    OnItemClickListener onItemClickListener;
 
-
-
-    public AdaptadorDetalle(ArrayList<EntidadDetalle> listaDetalle) {
+    public DetalleAdapter(ArrayList<EntidadDetalle> listaDetalle, OnItemClickListener onItemClickListener) {
         this.listaDetalle = listaDetalle;
-
+        this.onItemClickListener = onItemClickListener;
     }
 
     //@NonNull
@@ -31,7 +26,7 @@ public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.View
     public ViewHolderDetalle onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // hay que inflar el item list a través de un view
         View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recycler_detalle_item,null, false);
-        return new ViewHolderDetalle(view);
+        return new DetalleAdapter.ViewHolderDetalle(view, onItemClickListener);
 
     }
 
@@ -40,6 +35,13 @@ public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.View
         //se llenan los datos desde acá
         holder.titulo.setText(listaDetalle.get(position).getTitulo());
         holder.foto.setImageResource(listaDetalle.get(position).getFoto());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickListener.onClick(view, position);
+            }
+        });
     }
 
     @Override
@@ -47,23 +49,19 @@ public class AdaptadorDetalle extends RecyclerView.Adapter<AdaptadorDetalle.View
         return listaDetalle.size();
     }
 
-
-
-
-    public class ViewHolderDetalle extends RecyclerView.ViewHolder  {
+    public class ViewHolderDetalle extends RecyclerView.ViewHolder {
         //hace referencia a los componentes gráficos
         TextView titulo;
         ImageView foto;
         public View v;
-        public ViewHolderDetalle(@NonNull View itemView) {
+        OnItemClickListener onItemClickListener;
+
+        public ViewHolderDetalle(@NonNull View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
             v=itemView;
             titulo = (TextView) itemView.findViewById(R.id.textViewTitulo);
             foto = (ImageView) itemView.findViewById(R.id.imageView);
-
-
+            this.onItemClickListener = onItemClickListener;
         }
-
-
     }
 }
