@@ -29,13 +29,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.titulo.setText(entidades.get(position).getTitulo());
-        holder.foto.setImageResource(entidades.get(position).getFoto());
+    public void onBindViewHolder(@NonNull ViewHolder holder,int pos) {
+        holder.titulo.setText(entidades.get(holder.getAbsoluteAdapterPosition()).getTitulo());
+        holder.foto.setImageResource(entidades.get(holder.getAbsoluteAdapterPosition()).getFoto());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.onClick(view,position);
+                onItemClickListener.onClick(view,holder.getAbsoluteAdapterPosition());
 
             }
         });

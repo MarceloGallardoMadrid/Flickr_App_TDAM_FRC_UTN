@@ -31,15 +31,15 @@ public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderDetalle holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderDetalle holder, int pos) {
         //se llenan los datos desde acá
-        holder.titulo.setText(listaDetalle.get(position).getTitulo());
-        holder.foto.setImageResource(listaDetalle.get(position).getFoto());
+        holder.titulo.setText(listaDetalle.get(holder.getAbsoluteAdapterPosition()).getTitulo());
+        holder.foto.setImageResource(listaDetalle.get(holder.getAbsoluteAdapterPosition()).getFoto());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onItemClickListener.onClick(view, position);
+                onItemClickListener.onClick(view, holder.getAbsoluteAdapterPosition());
             }
         });
     }

@@ -9,7 +9,12 @@
     android:background="@color/background"
 
     >
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Probar room, apenas ande se quita"
+        android:id="@+id/btnRoom"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

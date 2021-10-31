@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.nahue.flickrapp.databd.TestRoom;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),DetalleActivity.class));
+            }
+        });
+        Button btnRoom=(Button)findViewById(R.id.btnRoom);
+        btnRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), TestRoom.class));
             }
         });
     }
