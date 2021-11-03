@@ -1,12 +1,12 @@
 package com.nahue.flickrapp.Entidades;
 
 public class RootObject {
-    Photoset PhotosetObject;
+    Photoset photoset;
     private String stat;
 
     // Getter Methods
     public Photoset getPhotoset() {
-        return PhotosetObject;
+        return photoset;
     }
 
     public String getStat() {
@@ -14,8 +14,8 @@ public class RootObject {
     }
 
     // Setter Methods
-    public void setPhotoset(Photoset photosetObject) {
-        this.PhotosetObject = photosetObject;
+    public void setPhotoset(Photoset photoset) {
+        this.photoset = photoset;
     }
 
     public void setStat(String stat) {

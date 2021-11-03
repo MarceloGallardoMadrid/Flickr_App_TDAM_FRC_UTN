@@ -52,10 +52,11 @@ public class DetalleActivity extends AppCompatActivity {
         recyclerViewDet.setHasFixedSize(true);
         recyclerViewDet.setLayoutManager(new LinearLayoutManager(this));
         //recyclerViewD.setLayoutManager(new GridLayoutManager(this, 2));
-
+        gson = new Gson();
 
         loadPostDetalle();
-        cargarDetalle();
+        //cargarDetalle();
+        //loadPostDetalle();
         //cargarDetalle2();
         //AdaptadorDetalle adapter = new AdaptadorDetalle(listadetalle);
 
@@ -80,7 +81,6 @@ public class DetalleActivity extends AppCompatActivity {
         @Override
         public void onResponse(String response) {
             RootObject ro = gson.fromJson(response, RootObject.class);
-
             for(Photo p : ro.getPhotoset().getPhoto()){
                 Photo photo = new Photo(p.getId(), p.getSecret(),p.getServer(),p.getTitle(),p.getIsprimary());
                 PostDetalleDirectorio post = new PostDetalleDirectorio(photo);
@@ -96,7 +96,8 @@ public class DetalleActivity extends AppCompatActivity {
         public void onErrorResponse(VolleyError error) {
             //text.setText("Error: " + error.getMessage());
             //showText();
-            Toast.makeText( getApplicationContext(),"Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+            System.out.println(error.getMessage());
+            //Toast.makeText( getApplicationContext(),"Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -123,7 +124,6 @@ public class DetalleActivity extends AppCompatActivity {
         for(int i=0; i <= ListadoPhoto.size(); i++){
             listadetalle.add(new EntidadDetalle(ListadoPhoto.get(i).getTitle(), R.drawable.foto1));
         }
-
     }
 
     private void cargarDetalle() {

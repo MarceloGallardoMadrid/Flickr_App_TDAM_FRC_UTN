@@ -19,6 +19,7 @@ public class PostDetalleDirectorio {
         this.server = photo.getServer();
         this.title = photo.getTitle();
         this.uri = "https://live.staticflickr.com/"+ this.server + "/" + this.id.toString() + "_"+ this.secret + "_w.jpg" ;
+        this.path = "";
         //https://live.staticflickr.com/65535/51504317081_a59b2bb444_w.jpg
     }
 
