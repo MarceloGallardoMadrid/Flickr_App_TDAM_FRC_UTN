@@ -10,10 +10,13 @@
         <entry key="..\:/Android/Flickr_App_TDAM_FRC_UTN/app/src/main/res/layout/activity_recycler_album_item.xml" value="0.13125" />
         <entry key="..\:/Android/Flickr_App_TDAM_FRC_UTN/app/src/main/res/layout/activity_recycler_detalle_item.xml" value="0.13125" />
         <entry key="..\:/Android/Flickr_App_TDAM_FRC_UTN/app/src/main/res/layout/fragment_recycler_album.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/pigui/AndroidStudioProjects/FlickrApp/app/src/main/res/layout/activity_foto_final.xml" value="0.14266304347826086" />
+        <entry key="..\:/Users/pigui/AndroidStudioProjects/FlickrApp/app/src/main/res/layout/activity_main.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/pigui/AndroidStudioProjects/FlickrApp/app/src/main/res/layout/activity_test_room.xml" value="0.14266304347826086" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
