@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnDetalle;
     ArrayList<EntidadDetalle> listadetalle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +33,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),DetalleActivity.class));
-            }
-        });
-        Button btnRoom=(Button)findViewById(R.id.btnRoom);
-        btnRoom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), TestRoom.class));
             }
         });
     }
