@@ -28,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction= getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container,frag);
         transaction.commit();
-        btnDetalle = (Button) findViewById(R.id.btnDetalle);
-        btnDetalle.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btnRoom).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),DetalleActivity.class));
+                startActivity(new Intent(getApplicationContext(),TestRoom.class));
             }
         });
+
     }
     private void onCreateRecycler(){
         listadetalle=new ArrayList<>();
