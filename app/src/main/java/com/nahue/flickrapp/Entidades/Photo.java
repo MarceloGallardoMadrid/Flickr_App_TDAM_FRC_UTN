@@ -11,13 +11,15 @@ public class Photo {
     private float isfriend;
     private float isfamily;
 
-    public Photo(Long id, String secret, String server, String title, String isprimary) {
+    public Photo(Long id, String secret, String server, String title, String isprimary, float ispublic, float isfriend, float isfamily) {
         this.id = id;
         this.secret = secret;
         this.server = server;
         this.title = title;
         this.isprimary = isprimary;
-
+        this.ispublic = ispublic;
+        this.isfriend = isfriend;
+        this.isfamily = isfamily;
     }
 
 

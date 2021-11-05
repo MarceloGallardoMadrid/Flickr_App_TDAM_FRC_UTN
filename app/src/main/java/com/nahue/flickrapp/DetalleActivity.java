@@ -41,6 +41,7 @@ public class DetalleActivity extends AppCompatActivity {
     private Gson gson;
 
     ArrayList<PostDetalleDirectorio> ListadoPhoto;
+    RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,21 +54,24 @@ public class DetalleActivity extends AppCompatActivity {
         recyclerViewDet.setLayoutManager(new LinearLayoutManager(this));
         //recyclerViewD.setLayoutManager(new GridLayoutManager(this, 2));
         gson = new Gson();
+        ListadoPhoto = new ArrayList<>();
 
         loadPostDetalle();
         //cargarDetalle();
         //loadPostDetalle();
-        //cargarDetalle2();
+
         //AdaptadorDetalle adapter = new AdaptadorDetalle(listadetalle);
 
-        RecyclerView.Adapter adapter = new DetalleAdapter(listadetalle, new OnItemClickListener() {
+        adapter = new DetalleAdapter(listadetalle, new OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
                 Toast.makeText(getApplicationContext(), "Hice un clic: "+position, Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(),FotoFinalActivity.class));
+
             }
         });
         recyclerViewDet.setAdapter(adapter);
+
     }
 
     private void loadPostDetalle() {
@@ -81,21 +85,26 @@ public class DetalleActivity extends AppCompatActivity {
         @Override
         public void onResponse(String response) {
             RootObject ro = gson.fromJson(response, RootObject.class);
-            for(Photo p : ro.getPhotoset().getPhoto()){
-                Photo photo = new Photo(p.getId(), p.getSecret(),p.getServer(),p.getTitle(),p.getIsprimary());
-                PostDetalleDirectorio post = new PostDetalleDirectorio(photo);
+            for(Photo p : ro.getPhotoset().getPhoto()) {
+
+                PostDetalleDirectorio post = new PostDetalleDirectorio(p);
+                //siempre la voy a buscar a la foto.
+                //post.setpath = "";
+                listadetalle.add(new EntidadDetalle(post.getTitle(), R.drawable.foto1));
                 ListadoPhoto.add(post);
+
+                //lamada a la obtención de esa foto.
+                //guarda foto
+                //actqualizar el post. con  path
             }
-            //text.setText(builder.toString());
-            //showText();
+            //cargarDetalle2();
+            adapter.notifyDataSetChanged(); //actualizar el adapter mientras vaya trayendo datos.
         }
     };
 
     private final Response.ErrorListener onPostsError = new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            //text.setText("Error: " + error.getMessage());
-            //showText();
             System.out.println(error.getMessage());
             //Toast.makeText( getApplicationContext(),"Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -121,7 +130,7 @@ public class DetalleActivity extends AppCompatActivity {
     }
 
     private void cargarDetalle2() {
-        for(int i=0; i <= ListadoPhoto.size(); i++){
+        for(int i=0; i < ListadoPhoto.size(); i++){
             listadetalle.add(new EntidadDetalle(ListadoPhoto.get(i).getTitle(), R.drawable.foto1));
         }
     }
