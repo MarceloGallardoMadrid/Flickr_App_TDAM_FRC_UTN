@@ -2,7 +2,12 @@ package com.nahue.flickrapp.Entidades;
 
 public class PostDetalleDirectorio {
     private Long id;
-    private String isprimary, secret, server, title, uri, path;
+    private String isprimary;
+    private String secret;
+    private String server;
+    private String title;
+    private String uri;
+    private String path;
 
     public PostDetalleDirectorio(Long id, String isprimary, String secret, String server, String title) {
         this.id = id;
@@ -23,7 +28,7 @@ public class PostDetalleDirectorio {
         //https://live.staticflickr.com/65535/51504317081_a59b2bb444_w.jpg
     }
 
-   /* public void setId(id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -42,7 +47,15 @@ public class PostDetalleDirectorio {
     public void setTitle(String title) {
         this.title = title;
     }
-*/
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public Long getId() {
         return id;
     }
@@ -62,4 +75,8 @@ public class PostDetalleDirectorio {
     public String getTitle() {
         return title;
     }
+
+    public String getUri() { return uri; }
+
+    public String getPath() { return path;  }
 }
