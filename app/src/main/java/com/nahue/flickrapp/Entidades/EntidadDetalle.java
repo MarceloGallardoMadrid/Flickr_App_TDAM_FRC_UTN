@@ -1,12 +1,12 @@
-package com.nahue.flickrapp;
+package com.nahue.flickrapp.Entidades;
 
 import android.net.Uri;
-import android.widget.ImageView;
 
 public class EntidadDetalle {
     private String titulo;
     private int foto;
      private Uri uri;
+    private Long photo_id;
 
     public EntidadDetalle(){
     }
@@ -16,9 +16,13 @@ public class EntidadDetalle {
         this.foto = foto;
     }
 
-    public EntidadDetalle(String titulo, Uri uri) {
+    public Long getPhoto_id() {     return photo_id;   }
+    public void setPhoto_id(Long photo_id) {    this.photo_id = photo_id;    }
+
+    public EntidadDetalle(String titulo, Uri uri, Long photo_id) {
         this.titulo = titulo;
         this.uri = uri;
+        this.photo_id = photo_id;
     }
 
     public String getTitulo() {

@@ -20,27 +20,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.nahue.flickrapp.Entidades.EntidadDetalle;
 import com.nahue.flickrapp.Entidades.Photo;
 import com.nahue.flickrapp.Entidades.PostDetalleDirectorio;
 import com.nahue.flickrapp.Entidades.RootObject;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class DetalleActivity extends AppCompatActivity {
@@ -61,7 +51,6 @@ public class DetalleActivity extends AppCompatActivity {
     String root = Environment.getExternalStorageDirectory().toString();
     String sdirectorio = root + "/fotos";
     String sarchivo = "";
-    //String archivo = "fotos/test.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +66,6 @@ public class DetalleActivity extends AppCompatActivity {
         imageFileUtil = new ImageFileUtil();
         ListadoPhoto = new ArrayList<>();
 
-        //File myDir = new File(root + "/" + folderPath);
-
         loadPostDetalle();
         //cargarDetalle();
         //loadPostDetalle();
@@ -89,7 +76,10 @@ public class DetalleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 Toast.makeText(getApplicationContext(), "Hice un clic: "+position, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(),FotoFinalActivity.class));
+                Intent intent = new Intent(getApplicationContext(),FotoFinalActivity.class);
+                intent.putExtra("titulo", listadetalle.get(position).getTitulo());
+                intent.putExtra("photo_id", listadetalle.get(position).getPhoto_id());
+                startActivity(intent);
             }
         });
         recyclerViewDet.setAdapter(adapter);
@@ -118,7 +108,7 @@ public class DetalleActivity extends AppCompatActivity {
                 //post.setpath = "";
                 //listadetalle.add(new EntidadDetalle(post.getTitle(), R.drawable.foto1));
                 Uri uri = imageFileUtil.getBitmapImageUri(sdirectorio, sarchivo);
-                listadetalle.add(new EntidadDetalle(post.getTitle(), uri));
+                listadetalle.add(new EntidadDetalle(post.getTitle(), uri, post.getId()));
 
                 ListadoPhoto.add(post);
                 //lamada a la obtención de esa foto.
