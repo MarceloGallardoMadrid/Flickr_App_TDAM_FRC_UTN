@@ -21,6 +21,7 @@ public class Photo {
         this.isfriend = isfriend;
         this.isfamily = isfamily;
     }
+    //Create URL
 
 
     // Getter Methods

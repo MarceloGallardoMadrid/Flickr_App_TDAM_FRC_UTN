@@ -6,17 +6,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+//Volleyyy/////////////
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.nahue.flickrapp.databd.Fotos;
+import com.nahue.flickrapp.databd.Photoset;
+import com.nahue.flickrapp.databd.RootFoto;
+
+
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
-    ArrayList<EntidadDetalle> entidades;
+    ArrayList<Photoset> entidades;
     OnItemClickListener onItemClickListener;
-    public AlbumAdapter(ArrayList<EntidadDetalle> entidades,OnItemClickListener onItemClickListener){
-        this.entidades=entidades;
+    public AlbumAdapter(OnItemClickListener onItemClickListener){
+        this.entidades=new ArrayList<>();
         this.onItemClickListener=onItemClickListener;
     }
 
@@ -30,8 +43,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder,int pos) {
-        holder.titulo.setText(entidades.get(holder.getAbsoluteAdapterPosition()).getTitulo());
-        holder.foto.setImageResource(entidades.get(holder.getAbsoluteAdapterPosition()).getFoto());
+        Photoset set=entidades.get(holder.getAbsoluteAdapterPosition());
+        holder.titulo.setText(set.title.content);
+        holder.imprimirImg(set);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,6 +53,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
             }
         });
+    }
+    public  void addPhotoset(Photoset p){
+        entidades.add(p);
     }
 
     @Override
@@ -56,10 +73,41 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
             super(itemView);
             v=itemView;
             titulo = (TextView) itemView.findViewById(R.id.lblAlbumm);
-            foto = (ImageView) itemView.findViewById(R.id.imgAlbum);
+            foto=(ImageView)itemView.findViewById(R.id.imgAlbum);
             this.onItemClickListener=onItemClickListener;
         }
+        //Metodo "sobrecargado" para imprimir una foto a partir de los datos de un album osea photoset
+        public void imprimirImg(Photoset set) {
+            Gson g = new Gson();
+            StringRequest stringRequest= new StringRequest(Request.Method.GET, set.url_fotos(), new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    RootFoto rfotos=g.fromJson(response,RootFoto.class);
+                    imprimirImg(rfotos.fotos.fotos[0].url_foto());
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(v.getContext(), "Imagen primera no sale bien",Toast.LENGTH_SHORT).show();
+                }
+            }
+            );
+            MyApplication.getSharedQueue().add(stringRequest);
+        }
+        //Metodo generico para dibujar una imagen con una url
+		private void imprimirImg(String url){
+            MyApplication.getImageLoader().get(url, new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    foto.setImageBitmap(response.getBitmap());
+                }
 
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(v.getContext(),"Imagen de mierda",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
     }
 }

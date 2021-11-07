@@ -63,11 +63,12 @@ public class DetalleActivity extends AppCompatActivity {
     String sarchivo = "";
     //String archivo = "fotos/test.png";
 
+    String url_album;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle);
-
+        url_album=getIntent().getStringExtra("url_album");
         listadetalle = new ArrayList<>();
         recyclerViewDet = (RecyclerView) findViewById(R.id.recyclerViewDetalle);
         recyclerViewDet.setHasFixedSize(true);
@@ -96,7 +97,9 @@ public class DetalleActivity extends AppCompatActivity {
     }
 
     private void loadPostDetalle() {
-        String url = "https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=80e44d9e765e01bef6d4e1294caaf54d&photoset_id=72157720019424378&user_id=193985255%40N05&format=json&nojsoncallback=1";
+        //URL de un album hardcodeda, deberia pasar la por parametro la activity anterior
+        //String url = "https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=80e44d9e765e01bef6d4e1294caaf54d&photoset_id=72157720019424378&user_id=193985255%40N05&format=json&nojsoncallback=1";
+        String url=url_album;
         StringRequest request = new StringRequest(Request.Method.GET, url, onPostsLoaded, onPostsError);
         MyApplication.getSharedQueue().add(request);
     }
