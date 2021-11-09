@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -52,11 +53,19 @@ public class DetalleActivity extends AppCompatActivity {
     String sdirectorio = root + "/fotos";
     String sarchivo = "";
 
+    String url_album;
+    String titulo;
+    TextView TituloDetalle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle);
 
+        TituloDetalle = (TextView) findViewById(R.id.tvTituloDetalle);
+        url_album=getIntent().getStringExtra("url_album");
+        titulo = getIntent().getStringExtra("titulo");
+        TituloDetalle.setText(titulo);
         listadetalle = new ArrayList<>();
         recyclerViewDet = (RecyclerView) findViewById(R.id.recyclerViewDetalle);
         recyclerViewDet.setHasFixedSize(true);
@@ -86,7 +95,9 @@ public class DetalleActivity extends AppCompatActivity {
     }
 
     private void loadPostDetalle() {
-        String url = "https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=80e44d9e765e01bef6d4e1294caaf54d&photoset_id=72157720019424378&user_id=193985255%40N05&format=json&nojsoncallback=1";
+        //URL de un album hardcodeda, deberia pasar la por parametro la activity anterior
+        //String url = "https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=80e44d9e765e01bef6d4e1294caaf54d&photoset_id=72157720019424378&user_id=193985255%40N05&format=json&nojsoncallback=1";
+        String url=url_album;
         StringRequest request = new StringRequest(Request.Method.GET, url, onPostsLoaded, onPostsError);
         MyApplication.getSharedQueue().add(request);
     }
