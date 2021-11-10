@@ -36,24 +36,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    private void onCreateRecycler(){
-        listadetalle=new ArrayList<>();
-        cargarDetalle();
-        //RecyclerView rec =(RecyclerView)findViewById(R.id.rec);
-        RecyclerView rec =new RecyclerView(this);
-        rec.setHasFixedSize(true);
-
-        rec.setLayoutManager(new LinearLayoutManager(this));
-
-        RecyclerView.Adapter adapter = new AlbumAdapter(listadetalle, new OnItemClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                Toast.makeText(getApplicationContext(), "Hice un clic: "+position, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(),DetalleActivity.class));
-            }
-        });
-        rec.setAdapter(adapter);
-    }
 
 
     private void cargarDetalle() {
