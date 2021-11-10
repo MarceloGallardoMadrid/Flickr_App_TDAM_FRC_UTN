@@ -95,7 +95,6 @@ public class DetalleActivity extends AppCompatActivity {
     }
 
     private void loadPostDetalle() {
-        //URL de un album hardcodeda, deberia pasar la por parametro la activity anterior
         //String url = "https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=80e44d9e765e01bef6d4e1294caaf54d&photoset_id=72157720019424378&user_id=193985255%40N05&format=json&nojsoncallback=1";
         String url=url_album;
         StringRequest request = new StringRequest(Request.Method.GET, url, onPostsLoaded, onPostsError);
@@ -111,14 +110,12 @@ public class DetalleActivity extends AppCompatActivity {
 
                 PostDetalleDirectorio post = new PostDetalleDirectorio(p);
                 sarchivo = post.getId().toString() + "_w.png";
-                //pngarchivo = post.getId().toString() + "_w.png";
-                //post.setPath(sdirectorio + "/"+ sarchivo);
                 post.setPath(sdirectorio + "/"+ sarchivo);
                 //siempre la voy a buscar a la foto.
                 loadImage(post.getUri(),sdirectorio,sarchivo);
-                //post.setpath = "";
-                //listadetalle.add(new EntidadDetalle(post.getTitle(), R.drawable.foto1));
                 Uri uri = imageFileUtil.getBitmapImageUri(sdirectorio, sarchivo);
+                //insertar en la base siempre y pisar.
+                //levantar registros desde la base y ahí llenar el listadetalle.
                 listadetalle.add(new EntidadDetalle(post.getTitle(), uri, post.getId()));
 
                 ListadoPhoto.add(post);
@@ -223,7 +220,6 @@ public class DetalleActivity extends AppCompatActivity {
         listadetalle.add(new EntidadDetalle("Ver que pasa si es una descripción muy larga que no entra",R.drawable.foto6));
         listadetalle.add(new EntidadDetalle("Bien",R.drawable.foto7));
         listadetalle.add(new EntidadDetalle("Excelente",R.drawable.foto8));
-
 
     }
 }
