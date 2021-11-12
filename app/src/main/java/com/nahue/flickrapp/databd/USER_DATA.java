@@ -10,5 +10,5 @@ public class USER_DATA {
     public static String PHOTOSET_MET="method=flickr.photosets.getList";
     public static String AND="&";
     public static String PHOTOS_MET="method=flickr.photosets.getPhotos";
-
+    public static String COMENTARIOS_MET = "method=flickr.photos.comments.getList";
 }

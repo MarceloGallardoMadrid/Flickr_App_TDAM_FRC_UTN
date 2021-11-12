@@ -29,7 +29,6 @@ public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.ViewHold
         // hay que inflar el item list a través de un view
         View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_recycler_detalle_item,null, false);
         return new DetalleAdapter.ViewHolderDetalle(view, onItemClickListener);
-
     }
 
     @Override

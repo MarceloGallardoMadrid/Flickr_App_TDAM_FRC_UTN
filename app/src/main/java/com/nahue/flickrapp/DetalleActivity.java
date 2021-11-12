@@ -79,15 +79,15 @@ public class DetalleActivity extends AppCompatActivity {
         //cargarDetalle();
         //loadPostDetalle();
 
-        //AdaptadorDetalle adapter = new AdaptadorDetalle(listadetalle);
-
         adapter = new DetalleAdapter(listadetalle, new OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
                 Toast.makeText(getApplicationContext(), "Hice un clic: "+position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(),FotoFinalActivity.class);
                 intent.putExtra("titulo", listadetalle.get(position).getTitulo());
-                intent.putExtra("photo_id", listadetalle.get(position).getPhoto_id());
+                //intent.putExtra("photo_id", listadetalle.get(position).getPhoto_id());
+                intent.putExtra("photo_id", listadetalle.get(position).getPhoto_id().toString());
+                intent.putExtra("uri_foto", listadetalle.get(position).getUri().toString());
                 startActivity(intent);
             }
         });
@@ -220,6 +220,5 @@ public class DetalleActivity extends AppCompatActivity {
         listadetalle.add(new EntidadDetalle("Ver que pasa si es una descripción muy larga que no entra",R.drawable.foto6));
         listadetalle.add(new EntidadDetalle("Bien",R.drawable.foto7));
         listadetalle.add(new EntidadDetalle("Excelente",R.drawable.foto8));
-
     }
 }
