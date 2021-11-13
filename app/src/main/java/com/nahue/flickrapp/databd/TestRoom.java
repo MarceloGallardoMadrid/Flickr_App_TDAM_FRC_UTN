@@ -18,19 +18,28 @@ public class TestRoom extends AppCompatActivity {
 
     TextView txtTest;
     Random rnd;
+    //Objeto que representa el acceso a los datos de los comentarios
     ComentarioViewModel mComentarioModel;
+    //Objeto que representa el acceso a los datos de las fotos
     DetalleDirectorioViewModel mDetalleDirectorioModel;
+    //Objeto que representa el acceso a los datos de los albumes
     DirectorioViewModel mDirectorioModel;
+
+    //No se porque lo comente seguro por referencia, borrar si no me acuer
     /*
     mWordViewModel=new ViewModelProvider(this).get(WordViewModel.class);
         mWordViewModel.getAllWords().observe(this,words -> {
         adapter.submitList(words);
     });
-    
+
      */
+    //Estos string representarian los recyclerView
     String ComentariosStack;
     String DirectoriosStack;
     String FotosStack;
+
+    //Objetos que funcionan como callbacks ante un cambio en la lista
+    //Los adapter de los recycler son observer
     Observer<List<Comentario>> comObs;
     Observer<List<Directorio>> dirObs;
     Observer<List<DetalleDirectorio>> fotoObs;
@@ -40,7 +49,9 @@ public class TestRoom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_room);
         rnd=new Random();
+        //Metodo para hacer referencia a los elementos visuales y darle logica a los botones
         initView();
+        //Metodo para tener acceso a los datos
         initRepos();
     }
 

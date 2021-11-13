@@ -5,7 +5,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -22,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MyApplication.INTERNET_CONEX=verifyConection();
+        notifyLackOfInternet(MyApplication.INTERNET_CONEX);
         listadetalle=new ArrayList<>();
         cargarDetalle();
         RecyclerAlbumFragment frag = new RecyclerAlbumFragment();
@@ -34,6 +39,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),TestRoom.class));
             }
         });
+
+    }
+
+    //Metodo encargado de avisar si hay internet
+    private void notifyLackOfInternet(int internetConex) {
+        //Notificar
+        NotificationUtil.notifyNoInternet(internetConex);
+    }
+
+    private int verifyConection() {
+        return NotificationUtil.verifyConection(this);
 
     }
 

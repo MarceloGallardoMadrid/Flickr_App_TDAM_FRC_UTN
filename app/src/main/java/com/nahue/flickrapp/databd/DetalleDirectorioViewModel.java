@@ -19,6 +19,6 @@ public class DetalleDirectorioViewModel extends AndroidViewModel{
 
     LiveData<List<DetalleDirectorio>> getAllFotos(){return  mAllFotos;}
     public void insert(DetalleDirectorio foto){mRepository.insertFoto(foto);}
-
+    public void deleteAll(){mRepository.deleteAllFotos();}
 
 }

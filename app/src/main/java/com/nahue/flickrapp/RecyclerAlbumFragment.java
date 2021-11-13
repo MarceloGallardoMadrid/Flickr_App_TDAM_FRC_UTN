@@ -1,17 +1,21 @@
 package com.nahue.flickrapp;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,9 +28,13 @@ import com.google.gson.Gson;
 import com.nahue.flickrapp.Entidades.Photo;
 import com.nahue.flickrapp.Entidades.Photoset;
 import com.nahue.flickrapp.Entidades.RootObject;
+import com.nahue.flickrapp.databd.ComentarioViewModel;
+import com.nahue.flickrapp.databd.DetalleDirectorioViewModel;
+import com.nahue.flickrapp.databd.DirectorioViewModel;
 import com.nahue.flickrapp.databd.Photosets;
 import com.nahue.flickrapp.databd.Root;
 import com.nahue.flickrapp.databd.USER_DATA;
+import com.nahue.flickrapp.listadapter.AlbumListAdapter;
 
 
 import javax.crypto.AEADBadTagException;
@@ -37,35 +45,25 @@ import javax.crypto.AEADBadTagException;
  * create an instance of this fragment.
  */
 public class RecyclerAlbumFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    //String necesario para acceder a los albumes, sino es usado sacarlo
     private static final String URL_SET = "https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=80e44d9e765e01bef6d4e1294caaf54d&photoset_id=72157720019424378&user_id=193985255%40N05&format=json&nojsoncallback=1";
-    AlbumAdapter adapter;
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    AlbumListAdapter adapter;
+
+
+    //Models de las entidades
+
+    //Objeto que representa el acceso a los datos de los albumes
+    DirectorioViewModel mDirectorioModel;
+
 
     public RecyclerAlbumFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecyclerAlbumFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static RecyclerAlbumFragment newInstance(String param1, String param2) {
         RecyclerAlbumFragment fragment = new RecyclerAlbumFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,8 +72,6 @@ public class RecyclerAlbumFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -84,34 +80,61 @@ public class RecyclerAlbumFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_recycler_album, container, false);
-        adapter=new AlbumAdapter(new OnItemClickListener() {
+        adapter=new AlbumListAdapter(new AlbumListAdapter.DirectorioDiff(), new OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
                 Intent i = new Intent(getActivity(),DetalleActivity.class);
-                i.putExtra("url_album",adapter.entidades.get(position).url_fotos());
-                i.putExtra("titulo", adapter.entidades.get(position).title.content );
+                Toast.makeText(getActivity(),"Intennt",Toast.LENGTH_SHORT).show();
+                i.putExtra("url_album",adapter.getDir(position).url_fotos());
+                i.putExtra("titulo", adapter.getDir(position).title );
                 //i.putExtra("titulo", "Musica" );
                 startActivity(i);
             }
         });
-        //Metodo para cargar los albumes del usuario
-        loadAlbumList();
         //Metodo para inicializar el recycler
         initRecycler(v);
+
+        //Metodo para cargar los albumes del usuario
+        loadAlbumList();
         return v;
 
     }
     public  void initRecycler(View v){
 
         RecyclerView rec = (RecyclerView)v.findViewById(R.id.recAlbum);
+
+
         rec.setHasFixedSize(true);
 
         rec.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         rec.setAdapter(adapter);
+        mDirectorioModel=new ViewModelProvider(this).get(DirectorioViewModel.class);
 
+        mDirectorioModel.getAllDirectorios().observe(getActivity(),directorios -> {
+            adapter.submitList(directorios);
+        });
     }
-	private void loadAlbumList(){
+    //Metodo que llena la lista de albumes
+    private void loadAlbumList(){
+        //Si hay internet los traigo y reinicio la tabla
+        if(MyApplication.INTERNET_CONEX==1){
+            /*
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    mDirectorioModel.deleteAll();
+                    adapter.notifyDataSetChanged();
+                    loadAlbumListApi();
+                }
+            });
+            */
+            //mDirectorioModel.deleteAll();
+            loadAlbumListApi();
+        }
+    }
+
+	private void loadAlbumListApi(){
 
 
         String url_albums = getUrlAlbums();
@@ -124,11 +147,10 @@ public class RecyclerAlbumFragment extends Fragment {
                 Root root=g.fromJson(response,Root.class);
                 //Se recorre cada album de la api y se lo agrega al adapter
                 for(int i=0;i<root.photosets.sets.length;i++){
-                    adapter.addPhotoset(root.photosets.sets[i]);
+                    mDirectorioModel.insert(CodecUtil.fromAPI2BD(root.photosets.sets[i]));
 
                 }
-
-             adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
