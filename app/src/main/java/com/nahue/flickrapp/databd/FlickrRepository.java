@@ -51,7 +51,10 @@ public class FlickrRepository{
 
     //Metodo para reiniciar la tabla directorio
     public void deleteAllDirectorio(){
-	    mDirectorioDao.deleteAll();
+        FlickrDatabase.databaseWriteExecutor.execute(()->{
+            mDirectorioDao.deleteAll();
+        });
+
     }
 
     //Observed LiveData will notify the observer when the data has changed

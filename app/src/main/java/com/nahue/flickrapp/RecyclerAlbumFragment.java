@@ -100,12 +100,8 @@ public class RecyclerAlbumFragment extends Fragment {
 
     }
     public  void initRecycler(View v){
-
         RecyclerView rec = (RecyclerView)v.findViewById(R.id.recAlbum);
-
-
         rec.setHasFixedSize(true);
-
         rec.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         rec.setAdapter(adapter);
@@ -135,8 +131,6 @@ public class RecyclerAlbumFragment extends Fragment {
     }
 
 	private void loadAlbumListApi(){
-
-
         String url_albums = getUrlAlbums();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url_albums, new Response.Listener<String>() {
             @Override
@@ -146,9 +140,9 @@ public class RecyclerAlbumFragment extends Fragment {
                 //Debi crear estas clases auxiliares para representar los mas transparentes al json de la api
                 Root root=g.fromJson(response,Root.class);
                 //Se recorre cada album de la api y se lo agrega al adapter
+                mDirectorioModel.deleteAll();
                 for(int i=0;i<root.photosets.sets.length;i++){
                     mDirectorioModel.insert(CodecUtil.fromAPI2BD(root.photosets.sets[i]));
-
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -163,17 +157,7 @@ public class RecyclerAlbumFragment extends Fragment {
         MyApplication.getSharedQueue().add(stringRequest);
 
 	}
-    /*private void cargarDetalle(ArrayList<EntidadDetalle> detalles) {
-        detalles.add(new EntidadDetalle("Nueva Foto",R.drawable.foto1));
-        detalles.add(new EntidadDetalle("Disfrutando el paisaje",R.drawable.foto2));
-        detalles.add(new EntidadDetalle("Disfrutando la vida",R.drawable.foto3));
-        detalles.add(new EntidadDetalle("Haciendo ejemplos",R.drawable.foto4));
-        detalles.add(new EntidadDetalle("Metiéndole a full para que salga",R.drawable.foto5));
-        detalles.add(new EntidadDetalle("Ver que pasa si es una descripción muy larga que no entra",R.drawable.foto6));
-        detalles.add(new EntidadDetalle("Bien",R.drawable.foto7));
-        detalles.add(new EntidadDetalle("Excelente",R.drawable.foto8));
-        //return detalles;
-    }*/
+
     //Metodo simple pero que evita recargar los metodos principales innecesariamente
     private String getUrlAlbums(){
         return USER_DATA.URL_REQUEST

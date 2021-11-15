@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="@color/background"
 
     >
     <Button
@@ -20,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/albumes"
         android:textAlignment="center"
-        android:textColor="#ffffff"
+        android:textColor="@color/colorPrimary"
         android:textSize="45dp"
         />
 
