@@ -30,12 +30,22 @@
         app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
         app:srcCompat="@drawable/foto1" />
 
+    <Button
+        android:id="@+id/btnmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="EnviarMail"
+        android:text="Mail"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="468dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewComentario"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginTop="500dp"
-        app:layout_constraintTop_toBottomOf="@id/ivFoto"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivFoto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

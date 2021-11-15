@@ -10,16 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nahue.flickrapp.Entidades.EntidadDetalle;
+import com.nahue.flickrapp.Entidades.PostDetalleDirectorio;
+import com.nahue.flickrapp.databd.Photoset;
 
 import java.util.ArrayList;
 
 public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.ViewHolderDetalle> {
 
-    ArrayList<EntidadDetalle> listaDetalle;
+    //ArrayList<EntidadDetalle> listaDetalle;
+    ArrayList<PostDetalleDirectorio> listaDetalle;
     OnItemClickListener onItemClickListener;
 
-    public DetalleAdapter(ArrayList<EntidadDetalle> listaDetalle, OnItemClickListener onItemClickListener) {
-        this.listaDetalle = listaDetalle;
+    public DetalleAdapter(OnItemClickListener onItemClickListener) {
+        this.listaDetalle = new ArrayList<>();
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -34,7 +37,8 @@ public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolderDetalle holder, int pos) {
         //se llenan los datos desde acá
-        holder.titulo.setText(listaDetalle.get(holder.getAbsoluteAdapterPosition()).getTitulo());
+        //holder.titulo.setText(listaDetalle.get(holder.getAbsoluteAdapterPosition()).getTitulo());
+        holder.titulo.setText(listaDetalle.get(holder.getAbsoluteAdapterPosition()).getTitle());
         holder.foto.setImageURI(listaDetalle.get(holder.getAbsoluteAdapterPosition()).getUri());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +51,10 @@ public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.ViewHold
     @Override
     public int getItemCount() {
         return listaDetalle.size();
+    }
+
+    public void addlista(PostDetalleDirectorio p){
+        listaDetalle.add(p);
     }
 
     public class ViewHolderDetalle extends RecyclerView.ViewHolder {

@@ -1,13 +1,22 @@
 package com.nahue.flickrapp.Entidades;
 
-public class PostDetalleDirectorio {
+import android.net.Uri;
+
+import java.io.Serializable;
+
+public class PostDetalleDirectorio  implements Serializable {
     private Long id;
     private String isprimary;
     private String secret;
     private String server;
     private String title;
-    private String uri;
+    private String url;
     private String path;
+    private String url_b; // paa buscar el archivo grande
+    private Uri uri;
+
+    public PostDetalleDirectorio(){
+    }
 
     public PostDetalleDirectorio(Long id, String isprimary, String secret, String server, String title) {
         this.id = id;
@@ -23,7 +32,8 @@ public class PostDetalleDirectorio {
         this.secret = photo.getSecret();
         this.server = photo.getServer();
         this.title = photo.getTitle();
-        this.uri = "https://live.staticflickr.com/"+ this.server + "/" + this.id.toString() + "_"+ this.secret + "_w.jpg" ;
+        this.url = "https://live.staticflickr.com/"+ this.server + "/" + this.id.toString() + "_"+ this.secret + "_w.jpg" ;
+        this.url_b = "https://live.staticflickr.com/"+ this.server + "/" + this.id.toString() + "_"+ this.secret + "_b.jpg" ;
         this.path = "";
         //https://live.staticflickr.com/65535/51504317081_a59b2bb444_w.jpg
     }
@@ -49,7 +59,7 @@ public class PostDetalleDirectorio {
     }
 
     public void setUri(String uri) {
-        this.uri = uri;
+        this.url = uri;
     }
 
     public void setPath(String path) {
@@ -76,7 +86,18 @@ public class PostDetalleDirectorio {
         return title;
     }
 
-    public String getUri() { return uri; }
+    public String getUrl() { return url; }
 
     public String getPath() { return path;  }
+
+    public String getUrl_b() { return url_b;    }
+
+    public void setUrl_b(String uri_b) {this.url_b = url_b;    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Uri getUri() {        return uri;    }
+
+    public void setUri(Uri uri) {        this.uri = uri;    }
 }

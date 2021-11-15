@@ -8,16 +8,32 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nahue.flickrapp.Entidades.Comment;
 import com.nahue.flickrapp.Entidades.EntidadComentario;
+import com.nahue.flickrapp.Entidades.PostDetalleDirectorio;
 
 import java.util.ArrayList;
 
 public class ComentarioAdapter extends RecyclerView.Adapter<ComentarioAdapter.ViewHolderComentario> {
 
-    ArrayList<EntidadComentario> listaComentario;
+    //ArrayList<EntidadComentario> listaComentario;
+    ArrayList<Comment> listaComentario;
 
-    public ComentarioAdapter(ArrayList<EntidadComentario> listaComentario){
+    /*public ComentarioAdapter(ArrayList<EntidadComentario> listaComentario){
         this.listaComentario = listaComentario;
+    }
+    */
+
+    public ComentarioAdapter(ArrayList<Comment> listaComentario){
+        this.listaComentario = new ArrayList<>();
+    }
+
+    public ComentarioAdapter (){
+        this.listaComentario = new ArrayList<>();
+    }
+
+    public void addlista(Comment p){
+        listaComentario.add(p);
     }
 
     //@NonNull
@@ -29,7 +45,9 @@ public class ComentarioAdapter extends RecyclerView.Adapter<ComentarioAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ComentarioAdapter.ViewHolderComentario holder, int position) {
-        holder.comentario.setText(listaComentario.get(holder.getAbsoluteAdapterPosition()).getComentario());
+        //holder.comentario.setText(listaComentario.get(holder.getAbsoluteAdapterPosition()).getComentario());
+        holder.comentario.setText(listaComentario.get(holder.getAbsoluteAdapterPosition()).get_content());
+        holder.autor.setText(listaComentario.get(holder.getAbsoluteAdapterPosition()).getRealname());
     }
 
     @Override
@@ -39,12 +57,14 @@ public class ComentarioAdapter extends RecyclerView.Adapter<ComentarioAdapter.Vi
 
     public class ViewHolderComentario extends RecyclerView.ViewHolder {
         TextView comentario;
+        TextView autor;
         public View v;
 
         public ViewHolderComentario(@NonNull View itemView) {
             super(itemView);
             v = itemView;
             comentario = (TextView) itemView.findViewById(R.id.textViewComentario);
+            autor = (TextView) itemView.findViewById(R.id.textViewAutor);
         }
     }
 }

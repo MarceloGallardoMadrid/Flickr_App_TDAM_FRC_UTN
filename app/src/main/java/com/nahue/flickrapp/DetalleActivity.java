@@ -40,14 +40,16 @@ public class DetalleActivity extends AppCompatActivity {
     private final static boolean SAVE_IMAGE_ON_DISK = true;
 
     RecyclerView recyclerViewDet;
-    ArrayList<EntidadDetalle> listadetalle;
+    //ArrayList<EntidadDetalle> listadetalle;
+    ArrayList<PostDetalleDirectorio> listadetalle;
 
     private ImageView image;
     private Gson gson;
     private ImageFileUtil imageFileUtil;
 
     ArrayList<PostDetalleDirectorio> ListadoPhoto;
-    RecyclerView.Adapter adapter;
+    //RecyclerView.Adapter adapter;
+    DetalleAdapter adapter;
 
     String root = Environment.getExternalStorageDirectory().toString();
     String sdirectorio = root + "/fotos";
@@ -76,18 +78,25 @@ public class DetalleActivity extends AppCompatActivity {
         ListadoPhoto = new ArrayList<>();
 
         loadPostDetalle();
-        //cargarDetalle();
-        //loadPostDetalle();
 
-        adapter = new DetalleAdapter(listadetalle, new OnItemClickListener() {
+        //adapter = new DetalleAdapter(listadetalle, new OnItemClickListener() {
+        adapter = new DetalleAdapter( new OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                Toast.makeText(getApplicationContext(), "Hice un clic: "+position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Hice un clic: "+position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(),FotoFinalActivity.class);
-                intent.putExtra("titulo", listadetalle.get(position).getTitulo());
-                //intent.putExtra("photo_id", listadetalle.get(position).getPhoto_id());
-                intent.putExtra("photo_id", listadetalle.get(position).getPhoto_id().toString());
+
+                intent.putExtra("titulo", listadetalle.get(position).getTitle());
+                intent.putExtra("url_b", listadetalle.get(position).getUrl_b());
                 intent.putExtra("uri_foto", listadetalle.get(position).getUri().toString());
+                //PostDetalleDirectorio pdd = (PostDetalleDirectorio) listadetalle.get(recyclerViewDet.getChildAdapterPosition(v));
+                intent.putExtra("photo_id", listadetalle.get(position).getId().toString());
+                /* no pasa el objeto
+                PostDetalleDirectorio pdd = (PostDetalleDirectorio) listadetalle.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("objeto", pdd);
+                intent.putExtras(bundle);
+                                 */
                 startActivity(intent);
             }
         });
@@ -112,13 +121,16 @@ public class DetalleActivity extends AppCompatActivity {
                 sarchivo = post.getId().toString() + "_w.png";
                 post.setPath(sdirectorio + "/"+ sarchivo);
                 //siempre la voy a buscar a la foto.
-                loadImage(post.getUri(),sdirectorio,sarchivo);
+                loadImage(post.getUrl(),sdirectorio,sarchivo);
                 Uri uri = imageFileUtil.getBitmapImageUri(sdirectorio, sarchivo);
+                post.setUri(uri);
                 //insertar en la base siempre y pisar.
                 //levantar registros desde la base y ahí llenar el listadetalle.
-                listadetalle.add(new EntidadDetalle(post.getTitle(), uri, post.getId()));
 
-                ListadoPhoto.add(post);
+                listadetalle.add(post);
+                adapter.addlista(post);
+
+                //ListadoPhoto.add(post);
                 //lamada a la obtención de esa foto.
                 //guarda foto
                 //actqualizar el post. con  path
@@ -140,7 +152,7 @@ public class DetalleActivity extends AppCompatActivity {
         switch (requestCode){
             case REQUEST_CODE_ASK_PERMISSIONS:
                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
-                   ///////// loadImageImpl();
+                    ///////// loadImageImpl();
                 }else{
                     Toast.makeText(this, "Unable to get image and then save it", Toast.LENGTH_LONG).show();
                 }
@@ -205,12 +217,7 @@ public class DetalleActivity extends AppCompatActivity {
         }
     }
 
-    private void cargarDetalle2() {
-        for(int i=0; i < ListadoPhoto.size(); i++){
-            listadetalle.add(new EntidadDetalle(ListadoPhoto.get(i).getTitle(), R.drawable.foto1));
-        }
-    }
-
+ /*
     private void cargarDetalle() {
         listadetalle.add(new EntidadDetalle("Nueva Foto",R.drawable.foto1));
         listadetalle.add(new EntidadDetalle("Disfrutando el paisaje",R.drawable.foto2));
@@ -221,4 +228,6 @@ public class DetalleActivity extends AppCompatActivity {
         listadetalle.add(new EntidadDetalle("Bien",R.drawable.foto7));
         listadetalle.add(new EntidadDetalle("Excelente",R.drawable.foto8));
     }
+
+  */
 }
