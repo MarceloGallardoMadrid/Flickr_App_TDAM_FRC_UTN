@@ -16,8 +16,8 @@ public class DirectorioViewModel extends AndroidViewModel{
         mAllDirectorios=mRepository.getAllDirectorios();
     }
 
-    LiveData<List<Directorio>> getAllDirectorios(){return  mAllDirectorios;}
+    public LiveData<List<Directorio>> getAllDirectorios(){return  mAllDirectorios;}
     public void insert(Directorio directorio){mRepository.insertDirectorio(directorio);}
-
+    public void deleteAll(){mRepository.deleteAllDirectorio();}
 
 }

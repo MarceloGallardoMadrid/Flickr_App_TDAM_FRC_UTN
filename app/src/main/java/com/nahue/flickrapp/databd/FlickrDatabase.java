@@ -38,6 +38,7 @@ public abstract class FlickrDatabase extends RoomDatabase {
                 if(INSTACE==null){
                     INSTACE= Room.databaseBuilder(context.getApplicationContext(),
                             FlickrDatabase.class,"flickr_database")
+
                             //.addCallback(sRoomDatabaseCallback)
                             .build();
                 }

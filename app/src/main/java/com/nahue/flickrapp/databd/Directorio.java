@@ -20,9 +20,6 @@ public class Directorio {
         dir.farm=String.valueOf(rnd.nextInt(6000));
         dir.photos=String.valueOf(rnd.nextInt(6000));
         dir.count_views=String.valueOf(rnd.nextInt(6000));
-        dir.count_commments=String.valueOf(rnd.nextInt(6000));
-        dir.date_create=String.valueOf(rnd.nextInt(6000));
-        dir.date_update=String.valueOf(rnd.nextInt(6000));
         dir.secret=String.valueOf(rnd.nextInt(6000));
         dir.title=String.valueOf(rnd.nextInt(6000));
         dir.descripcion=String.valueOf(rnd.nextInt(6000));
@@ -41,9 +38,6 @@ public class Directorio {
     public String farm;
     public String photos;
     public String count_views;
-    public String count_commments;
-    public String date_create;
-    public String date_update;
     public String title;
     public String descripcion;
 
@@ -51,4 +45,24 @@ public class Directorio {
     public String toString(){
         return "Directorio:{pk: "+pk+", id: "+id+", secret: "+secret+"}";
     }
+    @Override
+    public boolean equals(Object obj){
+        Directorio otro=(Directorio)obj;
+        return otro.pk==this.pk;
+    }
+    public String url_fotos(){
+        return  USER_DATA.URL_REQUEST
+                +USER_DATA.PHOTOS_MET
+                +USER_DATA.AND
+                +USER_DATA.API_KEY
+                +USER_DATA.AND
+                +"photoset_id="+id
+                +USER_DATA.AND
+                +USER_DATA.USER_ID
+                +USER_DATA.AND
+                +USER_DATA.FORMAT
+                +USER_DATA.AND
+                +"nojsoncallback=1";
+    }
 }
+

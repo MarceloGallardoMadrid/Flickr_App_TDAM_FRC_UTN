@@ -13,6 +13,10 @@ public class MyApplication extends Application {
     private static RequestQueue queue;
     private static ImageLoader imageLoader;
 
+    //Atributo global de la aplicacion que representa la conexion a internet
+    //0 para no,1 para si
+    public static int INTERNET_CONEX=0;
+
     @Override
     public void onCreate() {
         super.onCreate();

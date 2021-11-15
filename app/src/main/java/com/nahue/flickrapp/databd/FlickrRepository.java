@@ -30,7 +30,14 @@ public class FlickrRepository{
 		
 		
 	}
-	    //Observed LiveData will notify the observer when the data has changed
+
+	//Metodo para reiniciar tabla comentarios
+	public void deleteAllComentario(){
+	    mComentarioDao.deleteAll();
+    }
+
+
+	//Observed LiveData will notify the observer when the data has changed
     LiveData<List<Comentario>> getAllComentarios(){
         return mAllComentarios;
     }
@@ -41,7 +48,13 @@ public class FlickrRepository{
             mComentarioDao.insert(comentario);
         });
     }
-	    //Observed LiveData will notify the observer when the data has changed
+
+    //Metodo para reiniciar la tabla directorio
+    public void deleteAllDirectorio(){
+	    mDirectorioDao.deleteAll();
+    }
+
+    //Observed LiveData will notify the observer when the data has changed
     LiveData<List<Directorio>> getAllDirectorios(){
         return mAllDirectorios;
     }
@@ -52,7 +65,14 @@ public class FlickrRepository{
             mDirectorioDao.insert(directorio);
         });
     }
-	    //Observed LiveData will notify the observer when the data has changed
+
+
+    //Metodo para reiniciar la tabla detalle_directorio
+    public void deleteAllFotos(){
+        mDetalleDirectorioDao.deleteAll();
+    }
+
+	//Observed LiveData will notify the observer when the data has changed
     LiveData<List<DetalleDirectorio>> getAllFotos(){
         return mAllDetalleDirectorios;
     }
@@ -63,5 +83,6 @@ public class FlickrRepository{
             mDetalleDirectorioDao.insert(detalle);
         });
     }
+
 }
 

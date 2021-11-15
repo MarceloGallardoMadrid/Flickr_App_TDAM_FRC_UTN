@@ -8,6 +8,17 @@ public class Photoset {
     public Titulo title;
     @SerializedName("description")
     public Descripcion description;
+    @SerializedName("primary")
+    public String primary;
+    @SerializedName("server")
+    public String server;
+    @SerializedName("farm")
+    public String farm;
+    @SerializedName("phots")
+    public String photos;
+    @SerializedName("count_views")
+    public String count_views;
+
 
     public String toString(){
         return url_fotos();
