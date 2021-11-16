@@ -33,12 +33,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction= getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container,frag);
         transaction.commit();
-        findViewById(R.id.btnRoom).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),TestRoom.class));
-            }
-        });
 
     }
 
