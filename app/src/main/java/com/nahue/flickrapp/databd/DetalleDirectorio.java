@@ -1,4 +1,6 @@
 package com.nahue.flickrapp.databd;
+import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -40,8 +42,27 @@ public class DetalleDirectorio {
     public String path_disco_small;
     public String path_url;
 
+    @Ignore
+    public Uri uri;
+
+    @Ignore
+    public String url_b;
+
+    public Uri getUri() {        return uri;    }
+
+    public void setUri(Uri uri) {        this.uri = uri;    }
+
+    public String getUrl_b(){
+        return url_b;
+    }
+    public void setUrl_b(String url_b){
+        this.url_b=url_b;
+    }
+
     @Override
     public String toString(){
         return "Foto:{pk: "+pk+", id: "+photo_id+", secret: "+secret+"}";
     }
+
+    public String getTitle(){return title;}
 }

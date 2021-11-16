@@ -19,6 +19,7 @@ public class ComentarioViewModel extends AndroidViewModel{
     LiveData<List<Comentario>> getAllComentarios(){return  mAllComentarios;}
     public void insert(Comentario comentario){mRepository.insertComentario(comentario);}
     public void deleteAll(){mRepository.deleteAllComentario();}
-
+    public  void deleteAllFromFoto(String foto_id,String set_id){mRepository.deleteAllComentariosFromFoto(foto_id, set_id);}
+    public LiveData<List<Comentario>> getAllFromFoto(String foto,String set_id){return  mRepository.getAllComentariosFromFoto(foto, set_id);}
 
 }

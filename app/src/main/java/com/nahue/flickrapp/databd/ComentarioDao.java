@@ -17,10 +17,15 @@ public interface ComentarioDao {
 	
 	@Query("DELETE FROM comentario")
 	void deleteAll();
-	
+
+	@Query("DELETE FROM COMENTARIO where photo_id like :foto_id and album_id like :set_id")
+	void deleteFromFoto(String foto_id,String set_id);
+
 	@Query("SELECT * FROM comentario ")
 	LiveData<List<Comentario>> getComentarios();
-	
+
+	@Query("SELECT * FROM comentario where photo_id like :foto_id and album_id like :set_id")
+	LiveData<List<Comentario>> getComentariosFromFoto(String foto_id,String set_id);
 	@Update
 	void update(Comentario... comentario);
 	

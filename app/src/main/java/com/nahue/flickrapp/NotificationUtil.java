@@ -7,13 +7,8 @@ import android.net.NetworkInfo;
 import android.widget.Toast;
 
 public class NotificationUtil {
-    public static void notifyNoInternet(int internetConnection){
-        if(internetConnection==1){
-            //Avisar
-        }
-        else{
-            //Avisar con notificacion
-        }
+    public static void notifyNoInternet(){
+
     }
     public static int verifyConection(Activity activity){
 
@@ -26,6 +21,7 @@ public class NotificationUtil {
             }
             else{
                 Toast.makeText(activity, "No hay internet", Toast.LENGTH_SHORT).show();
+                notifyNoInternet();
                 return 0;
             }
 

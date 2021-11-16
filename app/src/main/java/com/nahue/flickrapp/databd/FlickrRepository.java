@@ -14,7 +14,8 @@ public class FlickrRepository{
 	
 	private DetalleDirectorioDao mDetalleDirectorioDao;
 	private LiveData<List<DetalleDirectorio>> mAllDetalleDirectorios;
-	
+	private LiveData<List<DetalleDirectorio>> mAllDetalleDirectoriosFromAlbum;
+
 	public FlickrRepository(Application application){
 		FlickrDatabase db=FlickrDatabase.getDatabase(application);
 		
@@ -23,7 +24,8 @@ public class FlickrRepository{
 		
 		mDetalleDirectorioDao =db.detalleDirectorioDao();
 		mAllDetalleDirectorios=mDetalleDirectorioDao.getFotos();
-		
+
+
 		
 		mComentarioDao=db.comentarioDao();
 		mAllComentarios=mComentarioDao.getComentarios();
@@ -31,9 +33,25 @@ public class FlickrRepository{
 		
 	}
 
+	/*
+	************************COMENTARIOS****************************
+	 */
+
+
 	//Metodo para reiniciar tabla comentarios
 	public void deleteAllComentario(){
 	    mComentarioDao.deleteAll();
+    }
+    //Metodo para borrar los comentarios de una foto
+    public void deleteAllComentariosFromFoto(String foto_id,String set_id){
+	    FlickrDatabase.databaseWriteExecutor.execute(()->{
+	        mComentarioDao.deleteFromFoto(foto_id,set_id);
+        });
+    }
+
+    //Metodo para traer los comentarios de una foto
+    LiveData<List<Comentario>> getAllComentariosFromFoto(String foto_id,String set_id){
+	   return mComentarioDao.getComentariosFromFoto(foto_id, set_id);
     }
 
 
@@ -49,11 +67,17 @@ public class FlickrRepository{
         });
     }
 
+    /*
+     ************************DIRECTORIOS****************************
+     */
+
     //Metodo para reiniciar la tabla directorio
     public void deleteAllDirectorio(){
-        FlickrDatabase.databaseWriteExecutor.execute(()->{
-            mDirectorioDao.deleteAll();
-        });
+	    FlickrDatabase.databaseWriteExecutor.execute(()->{
+                    mDirectorioDao.deleteAll();
+
+                });
+
 
     }
 
@@ -69,16 +93,34 @@ public class FlickrRepository{
         });
     }
 
+    /*
+     ************************FOTOS****************************
+     */
+
 
     //Metodo para reiniciar la tabla detalle_directorio
     public void deleteAllFotos(){
         mDetalleDirectorioDao.deleteAll();
     }
 
+    public void deleteAllFromAlbum(String album){
+	    FlickrDatabase.databaseWriteExecutor.execute(()->{
+	        mDetalleDirectorioDao.deleteAllFromAlbum(album);
+        });
+    }
+
 	//Observed LiveData will notify the observer when the data has changed
     LiveData<List<DetalleDirectorio>> getAllFotos(){
         return mAllDetalleDirectorios;
     }
+
+    //Observed LiveData will notify the observer when the data has changed
+    LiveData<List<DetalleDirectorio>> getAllFotosFromAlbum(String album){
+        mAllDetalleDirectoriosFromAlbum=mDetalleDirectorioDao.getFotosFromAlbum(album);
+        return mAllDetalleDirectoriosFromAlbum;
+    }
+
+
 
     //Para evitar long running task en el main thread, debo utilizar un hilo distinto al del UI
     void insertFoto(DetalleDirectorio detalle){

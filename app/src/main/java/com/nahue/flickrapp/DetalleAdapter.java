@@ -46,6 +46,7 @@ public class DetalleAdapter extends RecyclerView.Adapter<DetalleAdapter.ViewHold
                 onItemClickListener.onClick(view, holder.getAbsoluteAdapterPosition());
             }
         });
+
     }
 
     @Override

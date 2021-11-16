@@ -5,15 +5,15 @@ import android.net.Uri;
 import java.io.Serializable;
 
 public class PostDetalleDirectorio  implements Serializable {
-    private Long id;
-    private String isprimary;
-    private String secret;
-    private String server;
-    private String title;
-    private String url;
-    private String path;
-    private String url_b; // paa buscar el archivo grande
-    private Uri uri;
+    public Long id;
+    public String isprimary;
+    public String secret;
+    public String server;
+    public String title;
+    public String url;
+    public String path;
+    public String url_b; // paa buscar el archivo grande
+    public Uri uri;
 
     public PostDetalleDirectorio(){
     }
@@ -100,4 +100,5 @@ public class PostDetalleDirectorio  implements Serializable {
     public Uri getUri() {        return uri;    }
 
     public void setUri(Uri uri) {        this.uri = uri;    }
+
 }

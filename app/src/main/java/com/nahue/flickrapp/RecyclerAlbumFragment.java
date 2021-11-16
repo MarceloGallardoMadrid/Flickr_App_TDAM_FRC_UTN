@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.nahue.flickrapp.Entidades.Photo;
 import com.nahue.flickrapp.Entidades.Photoset;
 import com.nahue.flickrapp.Entidades.RootObject;
+import com.nahue.flickrapp.callback.APICallback;
 import com.nahue.flickrapp.databd.ComentarioViewModel;
 import com.nahue.flickrapp.databd.DetalleDirectorioViewModel;
 import com.nahue.flickrapp.databd.DirectorioViewModel;
@@ -85,8 +86,10 @@ public class RecyclerAlbumFragment extends Fragment {
             public void onClick(View v, int position) {
                 Intent i = new Intent(getActivity(),DetalleActivity.class);
                 Toast.makeText(getActivity(),"Intennt",Toast.LENGTH_SHORT).show();
+
                 i.putExtra("url_album",adapter.getDir(position).url_fotos());
                 i.putExtra("titulo", adapter.getDir(position).title );
+                i.putExtra("id_album",adapter.getDir(position).id);
                 //i.putExtra("titulo", "Musica" );
                 startActivity(i);
             }
@@ -115,18 +118,9 @@ public class RecyclerAlbumFragment extends Fragment {
     private void loadAlbumList(){
         //Si hay internet los traigo y reinicio la tabla
         if(MyApplication.INTERNET_CONEX==1){
-            /*
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    mDirectorioModel.deleteAll();
-                    adapter.notifyDataSetChanged();
-                    loadAlbumListApi();
-                }
-            });
-            */
-            //mDirectorioModel.deleteAll();
+
             loadAlbumListApi();
+
         }
     }
 

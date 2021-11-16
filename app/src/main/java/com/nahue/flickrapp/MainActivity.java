@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MyApplication.INTERNET_CONEX=verifyConection();
-        notifyLackOfInternet(MyApplication.INTERNET_CONEX);
         listadetalle=new ArrayList<>();
         cargarDetalle();
         RecyclerAlbumFragment frag = new RecyclerAlbumFragment();
@@ -42,11 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Metodo encargado de avisar si hay internet
-    private void notifyLackOfInternet(int internetConex) {
-        //Notificar
-        NotificationUtil.notifyNoInternet(internetConex);
-    }
+
 
     private int verifyConection() {
         return NotificationUtil.verifyConection(this);

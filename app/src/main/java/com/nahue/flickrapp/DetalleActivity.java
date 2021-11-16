@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +32,8 @@ import com.nahue.flickrapp.Entidades.EntidadDetalle;
 import com.nahue.flickrapp.Entidades.Photo;
 import com.nahue.flickrapp.Entidades.PostDetalleDirectorio;
 import com.nahue.flickrapp.Entidades.RootObject;
+import com.nahue.flickrapp.databd.DetalleDirectorioViewModel;
+import com.nahue.flickrapp.listadapter.DetalleListAdapter;
 
 import java.util.ArrayList;
 
@@ -42,6 +46,9 @@ public class DetalleActivity extends AppCompatActivity {
     RecyclerView recyclerViewDet;
     //ArrayList<EntidadDetalle> listadetalle;
     ArrayList<PostDetalleDirectorio> listadetalle;
+    DetalleDirectorioViewModel mDetalleModel;
+
+
 
     private ImageView image;
     private Gson gson;
@@ -50,23 +57,29 @@ public class DetalleActivity extends AppCompatActivity {
     ArrayList<PostDetalleDirectorio> ListadoPhoto;
     //RecyclerView.Adapter adapter;
     DetalleAdapter adapter;
-
+    DetalleListAdapter listAdapter;
+    
+    
+    
     String root = Environment.getExternalStorageDirectory().toString();
     String sdirectorio = root + "/fotos";
     String sarchivo = "";
 
     String url_album;
     String titulo;
+    String id_album;
     TextView TituloDetalle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle);
-
+        mDetalleModel = new ViewModelProvider(this).get(DetalleDirectorioViewModel.class);
         TituloDetalle = (TextView) findViewById(R.id.tvTituloDetalle);
         url_album=getIntent().getStringExtra("url_album");
         titulo = getIntent().getStringExtra("titulo");
+        id_album=getIntent().getStringExtra("id_album");
         TituloDetalle.setText(titulo);
         listadetalle = new ArrayList<>();
         recyclerViewDet = (RecyclerView) findViewById(R.id.recyclerViewDetalle);
@@ -78,43 +91,67 @@ public class DetalleActivity extends AppCompatActivity {
         ListadoPhoto = new ArrayList<>();
 
         loadPostDetalle();
-
-        //adapter = new DetalleAdapter(listadetalle, new OnItemClickListener() {
+        
+        
+        listAdapter =new DetalleListAdapter(new DetalleListAdapter.DetalleDirectorioDiff(), new OnItemClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                fotoFinalActivity(v,position);
+            }
+        });
+        /*
         adapter = new DetalleAdapter( new OnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-                //Toast.makeText(getApplicationContext(), "Hice un clic: "+position, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(),FotoFinalActivity.class);
+                fotoFinalActivity(v,position);
+            }
+        });
+        recyclerViewDet.setAdapter(adapter);
+        
+        */
+        recyclerViewDet.setAdapter(listAdapter);
+        mDetalleModel.getAllFotosFromAlbum(id_album).observe(this,fotos->{
+            listAdapter.submitList(fotos);
+        });
+    }
+    private void fotoFinalActivity(View v, int position){
+        //Toast.makeText(getApplicationContext(), "Hice un clic: "+position, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(),FotoFinalActivity.class);
 
-                intent.putExtra("titulo", listadetalle.get(position).getTitle());
-                intent.putExtra("url_b", listadetalle.get(position).getUrl_b());
-                intent.putExtra("uri_foto", listadetalle.get(position).getUri().toString());
-                //PostDetalleDirectorio pdd = (PostDetalleDirectorio) listadetalle.get(recyclerViewDet.getChildAdapterPosition(v));
-                intent.putExtra("photo_id", listadetalle.get(position).getId().toString());
+        intent.putExtra("titulo", listAdapter.getFoto(position).getTitle());
+        intent.putExtra("url_b", listAdapter.getFoto(position).getUrl_b());
+        intent.putExtra("uri_foto", listAdapter.getFoto(position).getUri().toString());
+        //PostDetalleDirectorio pdd = (PostDetalleDirectorio) listadetalle.get(recyclerViewDet.getChildAdapterPosition(v));
+        intent.putExtra("photo_id", listadetalle.get(position).getId().toString());
                 /* no pasa el objeto
                 PostDetalleDirectorio pdd = (PostDetalleDirectorio) listadetalle.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("objeto", pdd);
                 intent.putExtras(bundle);
                                  */
-                startActivity(intent);
-            }
-        });
-        recyclerViewDet.setAdapter(adapter);
-    }
+        startActivity(intent);
 
+    }
     private void loadPostDetalle() {
         //String url = "https://www.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=80e44d9e765e01bef6d4e1294caaf54d&photoset_id=72157720019424378&user_id=193985255%40N05&format=json&nojsoncallback=1";
-        String url=url_album;
-        StringRequest request = new StringRequest(Request.Method.GET, url, onPostsLoaded, onPostsError);
-        MyApplication.getSharedQueue().add(request);
+
+
+        if(NotificationUtil.verifyConection(this)==1){
+            String url=url_album;
+            StringRequest request = new StringRequest(Request.Method.GET, url, onPostsLoaded, onPostsError);
+            MyApplication.getSharedQueue().add(request);
+
+        }
     }
 
     private final Response.Listener<String> onPostsLoaded = new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
-            String pngarchivo;
+
+            mDetalleModel.deleteAllFromAlbum(id_album);
+
             RootObject ro = gson.fromJson(response, RootObject.class);
+
             for(Photo p : ro.getPhotoset().getPhoto()) {
 
                 PostDetalleDirectorio post = new PostDetalleDirectorio(p);
@@ -127,15 +164,16 @@ public class DetalleActivity extends AppCompatActivity {
                 //insertar en la base siempre y pisar.
                 //levantar registros desde la base y ahí llenar el listadetalle.
 
-                listadetalle.add(post);
-                adapter.addlista(post);
+                //listadetalle.add(post);
+                //adapter.addlista(post);
 
                 //ListadoPhoto.add(post);
                 //lamada a la obtención de esa foto.
                 //guarda foto
                 //actqualizar el post. con  path
+                mDetalleModel.insert(CodecUtil.fotoFromAPI2BD(post,id_album));
             }
-            adapter.notifyDataSetChanged(); //actualizar el adapter mientras vaya trayendo datos.
+            listAdapter.notifyDataSetChanged(); //actualizar el adapter mientras vaya trayendo datos.
         }
     };
 
