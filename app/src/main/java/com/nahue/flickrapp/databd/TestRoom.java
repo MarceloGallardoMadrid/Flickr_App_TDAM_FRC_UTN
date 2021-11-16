@@ -140,9 +140,7 @@ public class TestRoom extends AppCompatActivity {
         txtTest.setText("Se guardo: "+dir);
     }
     private void guardarComentario(){
-        Comentario com=Comentario.rnd(rnd);
-        mComentarioModel.insert(com);
-        txtTest.setText("Se guardo: "+com);
+
     }
     private void guardarFoto(){
         DetalleDirectorio fot=DetalleDirectorio.rnd(rnd);
