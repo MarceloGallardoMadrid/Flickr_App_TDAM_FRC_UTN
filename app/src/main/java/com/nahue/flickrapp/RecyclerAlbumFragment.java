@@ -84,7 +84,7 @@ public class RecyclerAlbumFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
                 Intent i = new Intent(getActivity(),DetalleActivity.class);
-                Toast.makeText(getActivity(),"Intennt",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"Intennt",Toast.LENGTH_SHORT).show();
                 i.putExtra("url_album",adapter.getDir(position).url_fotos());
                 i.putExtra("titulo", adapter.getDir(position).title );
                 //i.putExtra("titulo", "Musica" );
