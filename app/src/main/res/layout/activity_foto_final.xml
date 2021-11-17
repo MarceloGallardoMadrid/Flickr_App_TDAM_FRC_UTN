@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FotoFinalActivity">
+    tools:context=".FotoFinalActivity"
+    android:background="@color/background"
+    >
 
     <TextView
         android:id="@+id/tvTitulo"
@@ -13,7 +15,8 @@
         android:layout_marginTop="4dp"
         android:text="TextView"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
+        android:textStyle="italic"
+        android:textColor="@color/texto"
         android:textSize="45dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -23,8 +26,9 @@
 
     <ImageView
         android:id="@+id/ivFoto"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
         android:layout_marginTop="1dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
@@ -35,9 +39,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="EnviarMail"
-        android:text="Mail"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="468dp" />
+        android:drawableLeft="@drawable/ic_baseline_email_24"
+        android:textSize="30dp"
+
+        android:textColor="@color/texto"
+        android:textStyle="bold"
+        android:background="@color/background"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewComentario"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewComentario"

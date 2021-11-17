@@ -20,8 +20,4 @@ public interface DirectorioDao {
     @Query("SELECT * FROM directorio ")
     LiveData<List<Directorio>> getDirectorios();
 
-    @Update
-    void update(Directorio... directorio);
-
-
 }

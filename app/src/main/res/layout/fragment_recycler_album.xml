@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".RecyclerAlbumFragment"
     android:id="@+id/recAlbum"
+    android:background="@color/background"
     >
 
 

@@ -6,22 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-
+    android:background="@color/background"
     >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/albumes"
+        android:textStyle="bold"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="45dp"
+        android:textColor="@color/texto"
+        android:textSize="40dp"
         />
 
     <LinearLayout
         android:id="@+id/frame_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         />
 

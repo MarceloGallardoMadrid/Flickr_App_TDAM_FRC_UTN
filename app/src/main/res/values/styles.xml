@@ -10,5 +10,23 @@
         <item name="color">#ffffff</item>
         <item name="android:textSize">40dp</item>
     </style>
+    <style name="Divider.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+    <style name="whiteText.Large">
+        <item name="android:textSize">40dp</item>
+    </style>
+    <style name="whiteText.Medium">
+        <item name="android:textSize">22dp</item>
+    </style>
 
+    <style name="whiteText" parent="Theme.AppCompat">
+        <item name="android:textColor">#DDFFDD</item>
+    </style>
+
+
+    <style name="Divider">
+        <item name="background">@color/texto</item>
+    </style>
 </resources>
