@@ -118,7 +118,7 @@ public class DetalleActivity extends AppCompatActivity {
             for(Photo p : ro.getPhotoset().getPhoto()) {
 
                 PostDetalleDirectorio post = new PostDetalleDirectorio(p);
-                sarchivo = post.getId().toString() + "_w.png";
+                sarchivo = post.getId().toString() + "_b.png";
                 post.setPath(sdirectorio + "/"+ sarchivo);
                 //siempre la voy a buscar a la foto.
                 loadImage(post.getUrl(),sdirectorio,sarchivo);

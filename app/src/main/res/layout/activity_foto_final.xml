@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FotoFinalActivity"
     android:background="@color/background"
-    >
+    tools:context=".FotoFinalActivity">
 
     <TextView
         android:id="@+id/tvTitulo"
@@ -15,49 +14,57 @@
         android:layout_marginTop="4dp"
         android:text="TextView"
         android:textAlignment="center"
-        android:textStyle="italic"
         android:textColor="@color/texto"
         android:textSize="45dp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.62" />
 
     <ImageView
         android:id="@+id/ivFoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
+        app:layout_constraintVertical_bias="0.498"
         app:srcCompat="@drawable/foto1" />
 
     <Button
         android:id="@+id/btnmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="EnviarMail"
-        android:drawableLeft="@drawable/ic_baseline_email_24"
-        android:textSize="30dp"
-
-        android:textColor="@color/texto"
-        android:textStyle="bold"
+        android:layout_width="54dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="2dp"
         android:background="@color/background"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewComentario"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        android:drawableLeft="@drawable/ic_baseline_email_24"
+        android:onClick="EnviarMail"
+        android:textColor="@color/texto"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.955"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivFoto" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewComentario"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginTop="500dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivFoto" />
+        app:layout_constraintTop_toBottomOf="@+id/btnmail"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
